@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      
+      # installing dependencies
       - name: Install dependencies backend
         run: |
           cd backend
@@ -24,3 +26,13 @@ jobs:
         run: |
           cd frontend
           npm install
+
+      # linting code
+      - name: Lint backend
+        run: |
+          cd backend
+          npm run lint
+      - name: Lint frontend
+        run: |
+          cd frontend
+          npm run lint
