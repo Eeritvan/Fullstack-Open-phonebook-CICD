@@ -27,12 +27,20 @@ jobs:
           cd frontend
           npm install
 
-      # linting code
-      - name: Lint backend
+      # checking for linting errors
+      - name: Check backend style
         run: |
           cd backend
           npm run lint
-      - name: Lint frontend
+      - name: Check frontend style
         run: |
           cd frontend
           npm run lint
+
+      # building code
+      - name: building code
+        run: |
+          cd frontend
+          npm run build
+      - name: moving dist to backend
+        run: mv frontend/dist backend/
