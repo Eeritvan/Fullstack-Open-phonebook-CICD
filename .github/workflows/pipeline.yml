@@ -45,6 +45,18 @@ jobs:
       - name: moving dist to backend
         run: mv frontend/dist backend/
 
+      # deploying to fly.io
+      - name: Setup Flyctl
+        if: ${{ github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message, ', ')), '#skip') }}
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy to Fly
+        if: ${{ github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message, ', ')), '#skip') }}
+        run: |
+          cd backend
+          flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
   # tag
   tag_release:
     needs: [building]
