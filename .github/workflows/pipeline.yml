@@ -61,3 +61,26 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: patch
         PRERELEASE: true
+
+  # discord notification
+  notification:
+    needs: [deployment, tag_release]
+    if: ${{ github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message, ', ')), '#skip') }}
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Success
+      uses: rjstone/discord-webhook-notify@v1.0.4
+      if: success()
+      with:
+        severity: info
+        username: GitHub
+        details: Build successful!
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+    - name: Failure
+      uses: rjstone/discord-webhook-notify@v1.0.4
+      if: failure()
+      with:
+        severity: error
+        username: GitHub
+        details: Build failed!
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
