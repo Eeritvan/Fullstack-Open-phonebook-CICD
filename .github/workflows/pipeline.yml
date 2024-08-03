@@ -1,4 +1,4 @@
-name: Deployment pipeline
+name: Pipeline
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  deployment:
+  building:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
 
   # tag
   tag_release:
-    needs: [deployment]
+    needs: [building]
     if: ${{ github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message, ', ')), '#skip') }}
     runs-on: ubuntu-20.04
     steps:
@@ -64,7 +64,7 @@ jobs:
 
   # discord notification
   notification:
-    needs: [deployment, tag_release]
+    needs: [building, tag_release]
     if: ${{ github.event_name == 'push' && !contains(toJson(join(github.event.commits.*.message, ', ')), '#skip') }}
     runs-on: ubuntu-20.04
     steps:
