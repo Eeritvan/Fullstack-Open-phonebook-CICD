@@ -6,3 +6,4 @@ Currently the pipeline is
 - tagging the release
 - sending notification to my own discord server
 
+fly.io can tested [here](https://phonebook-cicd-2024.fly.dev).
