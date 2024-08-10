@@ -6,7 +6,7 @@ Currently the pipeline is
 - tagging the release
 - sending notification to my own discord server
 
-fly.io can tested [here](https://phonebook-cicd-2024.fly.dev).
+the fly.io app can tested [here](https://phonebook-cicd-2024.fly.dev).
 
 ## webhook
 Since the webhook isn't sending notifications to the official server but instead to my own, here is example how the notification looks:
